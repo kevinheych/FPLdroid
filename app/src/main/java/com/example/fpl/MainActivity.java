@@ -1,149 +1,164 @@
 package com.example.fpl;
 
+import android.os.Bundle;
+
+import com.example.fpl.Models.Entry.History;
+import com.example.fpl.Models.Bootstrap.Bootstrap;
+import com.example.fpl.Models.Entry.User;
+import com.example.fpl.Models.Picks.UserTeam;
+import com.example.fpl.ui.SwipeNavigation.ShareViewModel;
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.example.fpl.ui.SwipeNavigation.TabPagerAdapter;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    //data
+    private User managerData;
+    private Bootstrap bootstrap;
+    private History userHistory;
+    private UserTeam userTeam;
 
-    private Manager managerData = new Manager();
-    private RequestQueue mQueue;
-    private TextView managerText;
-    private TextView teamNameText;
-    private TextView gameweekHeader ;
-    private TextView averageText;
-    private TextView yourScoreText;
-    private TextView highText;
-    private TextView gwRankText;
-    private TextView overallRankText;
-    private TextView totalPlayerText;
-    private TextView teamIDText;
-    private TextView overallPointsText;
-    private TextView gwPointsText;
-    private TextView gwTransfersText;
-    private TextView totalTransfersText ;
-    private TextView ITBText ;
-    private TextView teamValueText;
-    private TextView wildcardText;
-    private TextView freehitText;
-    private TextView benchboostText;
+    private fplAPI fpLapi;
+    int userID;
 
+    private ShareViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //view outlets
-        managerText = findViewById(R.id.managerText);
-        teamNameText = findViewById(R.id.teamNameText);
-        gameweekHeader = findViewById(R.id.gameweekHeader);
-        averageText = findViewById(R.id.averageText);
-        yourScoreText = findViewById(R.id.yourScoreText);
-        highText = findViewById(R.id.highText);
-        gwRankText = findViewById(R.id.gwRankText);
-        overallRankText = findViewById(R.id.overallRankText);
-        totalPlayerText = findViewById(R.id.totalPlayerText);
-        teamIDText = findViewById(R.id.teamIDText);
-        overallPointsText = findViewById(R.id.overallPointsText);
-        gwPointsText = findViewById(R.id.gwPointsText);
-        gwTransfersText = findViewById(R.id.gwTransfersText);
-        totalTransfersText = findViewById(R.id.totalTransfersText);
-        ITBText = findViewById(R.id.ITBText);
-        teamValueText = findViewById(R.id.teamValueText);
-        wildcardText = findViewById(R.id.wildcardText);
-        freehitText = findViewById(R.id.freehitText);
-        benchboostText = findViewById(R.id.benchboostText);
+        //get data
+        viewModel = ViewModelProviders.of(this).get(ShareViewModel.class);
+        getData();
 
 
-        mQueue = Volley.newRequestQueue(getApplicationContext());
-        fetchData();
+        //create adapter for tab navigation
+        TabPagerAdapter sectionsPagerAdapter = new TabPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
 
-
-        loadViews();
 
 
     }
 
-    public void fetchData() {
+    public void getData() {
+        userID = 134211;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(fplAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        fpLapi = retrofit.create(fplAPI.class);
 
-        String url = "https://fantasy.premierleague.com/api/entry/134211/";
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+        getManagerData();
+        getLiveData();
+        getHistory();
+        getTeam();
+
+
+    }
+
+    private void getTeam() {
+
+
+        Call<UserTeam> call = fpLapi.getUserTeam(userID, 46);
+
+        call.enqueue(new Callback<UserTeam>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    managerData = new Manager();
-                    managerData.setName(response.getString("name"));
-                    managerData.setId(response.getInt("id"));
-                    managerData.setPlayer_first_name(response.getString("player_first_name"));
-                    managerData.setPlayer_last_name(response.getString("player_last_name"));
-                    managerData.setSummary_overall_points(response.getInt("summary_overall_points"));
-                    managerData.setSummary_overall_rank(response.getInt("summary_overall_rank"));
-                    managerData.setSummary_event_points(response.getInt("summary_event_points"));
-                    managerData.setSummary_event_rank(response.getInt("summary_event_rank"));
-                    managerData.setCurrent_event(response.getInt("current_event"));
-                    managerData.setLast_deadline_total_transfers(response.getInt("last_deadline_total_transfers"));
-                    managerData.setLast_deadline_value(response.getInt("last_deadline_value"));
-                    managerData.setLast_deadline_bank(response.getInt("last_deadline_bank"));
-
-                    loadViews();
-
-                    //Toast.makeText(getApplicationContext(), "I am OK !" + response.toString(), Toast.LENGTH_LONG).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            public void onResponse(Call<UserTeam> call, Response<UserTeam> response) {
+                System.out.println(response.toString());
+                if (response.isSuccessful()) {
+                    System.out.println(response.toString());
+                    userTeam = response.body();
+                    viewModel.setUserTeamData(userTeam);
+                    System.out.println("Success getTeam");
                 }
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<UserTeam> call, Throwable t) {
+                System.out.println("onFailure: getTeam " + t.getLocalizedMessage());
             }
         });
 
-        requestQueue.add(request);
 
     }
 
-    public void loadViews() {
+    private void getManagerData() {
 
-        managerText.setText(managerData.player_first_name + " " + managerData.player_last_name);
-        teamNameText.setText(managerData.name);
-        gameweekHeader.setText("Gameweek " + String.valueOf(managerData.current_event) );
-       // averageText.setText(String.valueOf(managerData.a));
-        yourScoreText.setText(String.valueOf(managerData.summary_event_points));
-        gwRankText.setText(String.valueOf(managerData.summary_event_rank));
-        overallRankText.setText(String.valueOf(managerData.summary_overall_rank));
-        teamIDText.setText(String.valueOf(managerData.id));
-        overallPointsText.setText(String.valueOf(managerData.summary_overall_points));
-        gwPointsText.setText(String.valueOf(managerData.summary_event_points));
+        Call<User> call = fpLapi.getUser(userID);
 
-       // gwTransfersText.setText(String.valueOf(managerData.tr));
-        totalTransfersText.setText(String.valueOf(managerData.last_deadline_total_transfers));
-        ITBText.setText(String.valueOf(managerData.last_deadline_bank));
-        teamValueText.setText(String.valueOf(managerData.last_deadline_value));
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    System.out.println(response.toString());
+                    managerData = response.body();
+                    viewModel.setUser(managerData);
+                    System.out.println("Success getManagerData");
+                }
+            }
 
-       // wildcardText
-        //freehitText
-        //benchboostText
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                System.out.println("onFailure: getManagerData " + t.getLocalizedMessage());
 
-
+            }
+        });
 
     }
 
+    private void getLiveData() {
+        Call<Bootstrap> call = fpLapi.getLive();
 
+        call.enqueue(new Callback<Bootstrap>() {
+            @Override
+            public void onResponse(Call<Bootstrap> call, Response<Bootstrap> response) {
+                if (response.isSuccessful()) {
+                    bootstrap = response.body();
+                    viewModel.setBootstrap(bootstrap);
+                    System.out.println(response.toString());
+                    System.out.println("Success getLiveData");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Bootstrap> call, Throwable t) {
+                System.out.println("onFailure: getLive " + t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void getHistory() {
+        Call<History> call = fpLapi.getHistory(userID);
+
+        call.enqueue(new Callback<History>() {
+            @Override
+            public void onResponse(Call<History> call, Response<History> response) {
+                userHistory = response.body();
+                viewModel.setHistory(userHistory);
+                System.out.println(response.toString());
+                System.out.println("Success getHistory");
+            }
+
+            @Override
+            public void onFailure(Call<History> call, Throwable t) {
+                System.out.println("onFailure: getHistory " + t.getLocalizedMessage());
+            }
+        });
+    }
 }

@@ -1,13 +1,16 @@
 package com.example.fpl;
 
-import com.example.fpl.Models.LiveData.LiveData;
-import com.example.fpl.Models.User;
+import com.example.fpl.Models.Entry.History;
+import com.example.fpl.Models.Bootstrap.Bootstrap;
+import com.example.fpl.Models.Entry.User;
+import com.example.fpl.Models.Picks.UserTeam;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 
-public interface FPLapi {
+public interface fplAPI {
 
 /*
 ## Json links
@@ -24,17 +27,21 @@ public interface FPLapi {
     String BASE_URL = "https://fantasy.premierleague.com/api/";
 
     @Headers("User-Agent: Mozilla/5.0")
-    @GET("entry/134211/")
-    Call<User> getUser();
+    @GET("entry/{id}/")
+    Call<User> getUser(@Path("id") int userID);
 
     @Headers("User-Agent: Mozilla/5.0")
     @GET("bootstrap-static/")
-    Call<LiveData> getLive();
+    Call<Bootstrap> getLive();
 
     @Headers("User-Agent: Mozilla/5.0")
-    @GET("entry/{userID}/history/")
-    Call<>
+    @GET("entry/{id}/history/")
+    Call<History> getHistory(@Path("id") int userID);
 
+
+    @Headers("User-Agent: Mozilla/5.0")
+    @GET("entry/{id}/event/{gw}/picks/")
+    Call<UserTeam> getUserTeam(@Path("id") int userID, @Path("gw") int gw);
 
 
 

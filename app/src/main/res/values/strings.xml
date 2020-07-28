@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">FPL</string>
+    <string name="app_name">Fantasy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_text_1">Status</string>
+    <string name="tab_text_2">Team</string>
+    <string name="tab_text_3">League</string>
 </resources>
