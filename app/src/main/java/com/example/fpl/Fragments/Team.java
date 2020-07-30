@@ -226,7 +226,7 @@ public class Team extends Fragment {
 
 
         //seperate starting and bench
-        List<Picks> startingXIListRaw = picks.subList(0, 10);
+        List<Picks> startingXIListRaw = picks.subList(0, 11);
         List<Picks> benchListRaw = picks.subList(11, 15);
 
 
@@ -276,7 +276,7 @@ public class Team extends Fragment {
 
             PlayerItem playerItem = new PlayerItem();
             playerItem.setId(playerID);
-            playerItem.setName(playerInfo.getFirst_name() + "" + playerInfo.getSecond_name());
+            playerItem.setName(playerInfo.getWeb_name());
             playerItem.setElement_type(playerInfo.getElement_type());
             playerItem.setTeam_id(playerInfo.getTeam());
             playerItem.setEvent_points(playerInfo.getEvent_points());

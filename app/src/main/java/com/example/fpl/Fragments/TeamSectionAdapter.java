@@ -1,9 +1,11 @@
 package com.example.fpl.Fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -106,10 +108,14 @@ public class TeamSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class BenchViewHolder extends RecyclerView.ViewHolder{
         private RecyclerView playerRV;
+        private LinearLayout layout;
 
         public BenchViewHolder(@NonNull View itemView) {
             super(itemView);
             playerRV = itemView.findViewById(R.id.team_sectionRV);
+            layout = itemView.findViewById(R.id.team_section_layout);
+            layout.setBackgroundColor(Color.WHITE);
+          //  layout.setPadding(0,5,0,0);
         }
 
         public void bind(TeamList teamlist) {
@@ -117,6 +123,8 @@ public class TeamSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             playerRV.setLayoutManager(gridLayoutManager);
             TeamItemAdapter adapter = new TeamItemAdapter(context, teamlist.getPlayersList());
             playerRV.setAdapter(adapter);
+
+
         }
     }
 

@@ -3,38 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#37003C"
     android:orientation="vertical"
     tools:context=".Fragments.Team">
 
 
-    <TextView
-        android:id="@+id/gwHeader"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="#e2e2e2"
-        android:gravity="bottom|center_horizontal"
 
-        android:text="Gameweek"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="18dp"
-        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pickerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingLeft="183dp"
         android:paddingRight="183dp"
+        >
 
-        android:id="@+id/pickerView"></androidx.recyclerview.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_pitch" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/teamRV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-
-        android:layout_width="match_parent"
+        android:id="@+id/benchRV"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/teamRV"
-        android:orientation="vertical"
-        ></androidx.recyclerview.widget.RecyclerView>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"/>
 
 </LinearLayout>

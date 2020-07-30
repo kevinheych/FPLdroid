@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragments.Status">
 
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical">
+
+
     <TableLayout
+        android:id="@+id/HeaderTable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
         <TableRow
-            android:background="#32093C"
-            android:minHeight="200px"
-            android:paddingVertical="5dp">
+            android:id="@+id/nameRow"
+            android:background="#37003c"
+            android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/managerText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16sp"
-                android:paddingTop="24sp"
-                android:paddingBottom="8sp"
-                android:text="Manager Name"
+
+                android:id="@+id/teamNameText"
+                android:layout_margin="8dp"
+                android:padding="16dp"
+                android:text="Team Name"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
+
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/teamNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingLeft="8sp"
-                android:paddingTop="24sp"
-                android:paddingBottom="8sp"
-                android:text="Team Name"
+                android:id="@+id/managerText"
+                android:layout_margin="4dp"
+                android:padding="16dp"
+                android:text="Manager Name"
                 android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+
+                />
         </TableRow>
 
         <TableRow
+            android:id="@+id/LivePointsRow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            android:background="#32093c"
+            android:background="#37003c"
             android:gravity="center"
             android:paddingVertical="8dp">
 
@@ -126,7 +134,16 @@
                 android:textSize="20sp" />
         </TableRow>
 
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/RankingTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <TableRow
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -135,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
                 android:layout_weight="1"
-                android:background="#32093c"
+                android:background="#37003c"
                 android:gravity="center"
                 android:paddingVertical="8dp"
                 android:text="Points / Rankings"
@@ -144,113 +161,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Gameweek Rank"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/gwRankText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="D"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:id="@+id/overallRank"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Overall Rank"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/overallRankText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="E"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:id="@+id/totalPlayer"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Total Players"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/totalPlayerText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="F"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:id="@+id/teamID"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Team ID"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/teamIDText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="G"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
+            android:id="@+id/overallpointsrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16sp"
@@ -262,9 +173,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="	#00ff87"
-                android:paddingLeft="8sp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 android:text="Overall Points"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/overallPointsText"
@@ -272,12 +185,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="100sp"
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
                 android:text="H"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/gwrankrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16sp"
@@ -289,9 +205,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="	#00ff87"
-                android:paddingLeft="8sp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 android:text="Gameweek Points"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/gwPointsText"
@@ -299,221 +217,394 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="100sp"
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
                 android:text="B"
-                android:textSize="18sp" />
-        </TableRow>
-
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:layout_weight="1"
-                android:background="#32093c"
-                android:gravity="center"
-                android:paddingVertical="8dp"
-                android:text="Transfers / Finance"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
-
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/gwRankrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16sp"
             android:paddingRight="16sp">
 
             <TextView
-                android:id="@+id/gwTransfers"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Gameweek Transfers"
-                android:textSize="18sp" />
+                android:background="#00ff87"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Gameweek Rank"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/gwTransfersText"
+                android:id="@+id/gwRankText"
                 android:layout_width="0sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="I"
-                android:textSize="18sp" />
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                android:text="D"
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/overallrankrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16sp"
             android:paddingRight="16sp">
 
             <TextView
-                android:id="@+id/totalTransfers"
+                android:id="@+id/overallRank"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Total Transfers"
-                android:textSize="18sp" />
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Overall Rank"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/totalTransfersText"
+                android:id="@+id/overallRankText"
                 android:layout_width="0sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="J"
-                android:textSize="18sp" />
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                android:text="E"
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/totalplayersrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16sp"
             android:paddingRight="16sp">
 
             <TextView
-                android:id="@+id/teamValue"
+                android:id="@+id/totalPlayer"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Team Value"
-                android:textSize="18sp" />
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Total Players"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/teamValueText"
+                android:id="@+id/totalPlayerText"
                 android:layout_width="0sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="L"
-                android:textSize="18sp" />
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                android:text="F"
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/teamidrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16sp"
             android:paddingRight="16sp">
 
             <TextView
-                android:id="@+id/ITB"
+                android:id="@+id/teamID"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Bank"
-                android:textSize="18sp" />
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Team ID"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/ITBText"
+                android:id="@+id/teamIDText"
                 android:layout_width="0sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="K"
-                android:textSize="18sp" />
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                android:text="G"
+                android:textSize="16sp" />
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:id="@+id/wildcard"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Wildcard"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/wildcardText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="M"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:id="@+id/freehit"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Freehit"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/freehitText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="N"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="16sp"
-            android:paddingRight="16sp">
-
-            <TextView
-                android:id="@+id/benchboost"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="	#00ff87"
-                android:paddingLeft="8sp"
-                android:text="Bench Boost"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/benchboostText"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="100sp"
-                android:text="O"
-                android:textSize="18sp" />
-        </TableRow>
-
 
     </TableLayout>
 
+     <TableLayout
+         android:id="@+id/TransfersTable"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
-</FrameLayout>
+
+         <TableRow
+             android:id="@+id/transferheader"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+             <TextView
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="8sp"
+                 android:layout_weight="1"
+                 android:background="#37003c"
+                 android:gravity="center"
+                 android:paddingVertical="8dp"
+                 android:text="Transfers / Finance"
+                 android:textColor="@android:color/white"
+                 android:textSize="20sp" />
+
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/gwtransfersrow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/gwTransfers"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Gameweek Transfers"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/gwTransfersText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="I"
+                 android:textSize="16sp" />
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/teamvaluerow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/teamValue"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Team Value"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/teamValueText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="L"
+                 android:textSize="16sp" />
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/bankrow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/ITB"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Bank"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/ITBText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="K"
+                 android:textSize="16sp" />
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/totaltransferswrow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/totalTransfers"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Total Transfers"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/totalTransfersText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="J"
+                 android:textSize="16sp" />
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/wcrow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/wildcard"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Wildcard"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/wildcardText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="M"
+                 android:textSize="16sp" />
+
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/freehitrow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/freehit"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Freehit"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/freehitText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="N"
+                 android:textSize="16sp" />
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/bbrow"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="16sp"
+             android:paddingRight="16sp">
+
+             <TextView
+                 android:id="@+id/benchboost"
+                 android:layout_width="0sp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:background="	#00ff87"
+                 android:paddingLeft="8dp"
+                 android:paddingTop="4dp"
+                 android:paddingBottom="4dp"
+                 android:text="Bench Boost"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/benchboostText"
+                 android:layout_width="0sp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:gravity="right"
+                 android:paddingTop="4dp"
+                 android:paddingRight="16dp"
+                 android:paddingBottom="4dp"
+                 android:text="O"
+                 android:textSize="16sp" />
+         </TableRow>
+
+
+     </TableLayout>
+
+ </LinearLayout>
+</ScrollView>
