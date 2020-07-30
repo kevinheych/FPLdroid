@@ -8,19 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fpl.Models.Picks.PlayerItem;
+import com.example.fpl.Models.TeamList;
 import com.example.fpl.R;
 
 import java.util.List;
 
-public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerViewAdapter.ViewHolder> {
+public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHolder> {
 
     private List<PlayerItem> teamList;
     private LayoutInflater mInflater;
 
-    public TeamRecyclerViewAdapter(Context context, List<PlayerItem> teamList) {
+    public TeamItemAdapter(Context context, List<PlayerItem> teamList) {
         this.mInflater = LayoutInflater.from(context);
         this.teamList = teamList;
 
@@ -35,10 +37,9 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PlayerItem player = teamList.get(position);
+        PlayerItem item = teamList.get(position);
 
-        holder.playerNameTextView.setText(player.getName());
-        holder.playerPointsTextView.setText(String.valueOf(player.getEvent_points()));
+        holder.bind(item);
     }
 
     @Override
@@ -58,5 +59,11 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             playerPointsTextView = itemView.findViewById(R.id.playerPoints);
             playerImageView = itemView.findViewById(R.id.playerImageView);
         }
+        public void bind(PlayerItem player) {
+            playerNameTextView.setText(player.getName());
+            playerPointsTextView.setText(String.format("%,d", player.getEvent_points()));
+
+        }
+
     }
 }

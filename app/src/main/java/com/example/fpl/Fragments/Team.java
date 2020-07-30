@@ -6,26 +6,37 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fpl.Models.Bootstrap.Bootstrap;
 import com.example.fpl.Models.Bootstrap.Elements;
+import com.example.fpl.Models.Entry.User;
 import com.example.fpl.Models.Picks.Picks;
 import com.example.fpl.Models.Picks.PlayerItem;
 import com.example.fpl.Models.Picks.UserTeam;
 import com.example.fpl.Models.TeamList;
 import com.example.fpl.R;
-import com.example.fpl.ui.SwipeNavigation.ShareViewModel;
+import com.example.fpl.RequestManager;
+import com.example.fpl.ShareViewModel;
+import com.example.fpl.fplAPI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,13 +50,18 @@ public class Team extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    RecyclerView recyclerView;
-
+    RecyclerView teamRecyclerView, pickerRV;
+    private fplAPI fpLapi;
     //data
 //    private ShareViewModel viewModel;
     private UserTeam userTeam;
     private Bootstrap bootstrap;
     private List<TeamList> sectionedList;
+    private int currentGW;
+    private int selectedGW;
+    ShareViewModel viewModel;
+
+    private int userID;
 
     public Team() {
         // Required empty public constructor
@@ -62,8 +78,35 @@ public class Team extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        //get instance of viewmodel
-        ShareViewModel viewModel = ViewModelProviders.of(getActivity()).get(ShareViewModel.class);
+
+        viewModel = ViewModelProviders.of(getActivity()).get(ShareViewModel.class);
+
+        if (viewModel.getUserID().getValue() != null) {
+            System.out.println("videmodel.getUserID  "+viewModel.getUserID().getValue());
+            userID = viewModel.getUserID().getValue();
+        }
+
+
+
+
+        viewModel.getUserID().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                userID = integer;
+                System.out.println("Get team");
+
+
+            }
+        });
+
+        viewModel.getCurrentGW().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                currentGW = integer;
+                initialisePickerRV();
+                getTeamData(currentGW);
+            }
+        });
 
 
         //subscribe and observe to changes to data
@@ -71,11 +114,12 @@ public class Team extends Fragment {
             @Override
             public void onChanged(UserTeam userTeamData) {
                 userTeam = userTeamData;
-                System.out.println(userTeam);
+                System.out.println("getUserTeam() : " +userTeam);
 
                 if (userTeam != null && bootstrap != null) {
+
                     getFullPlayerDetails();
-                    loadRV();
+                    loadTeamRV();
                 }
 
             }
@@ -90,7 +134,8 @@ public class Team extends Fragment {
 
                 if (userTeam != null && bootstrap != null) {
                     getFullPlayerDetails();
-                    loadRV();
+
+                    loadTeamRV();
                 }
 
             }
@@ -99,13 +144,69 @@ public class Team extends Fragment {
 
     }
 
-    private void loadRV() {
-        int numberOfColumns = 5;
+    public void getTeamData(int gameweek) {
+
+        fpLapi = RequestManager.getRetrofitInstance().create(fplAPI.class);
+        Call<UserTeam> call = fpLapi.getUserTeam(userID, gameweek);
+        call.enqueue(new Callback<UserTeam>() {
+            @Override
+            public void onResponse(Call<UserTeam> call, Response<UserTeam> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("call getUserTeam in getTeamData" +response.toString());
+
+                    userTeam = response.body();
+                    viewModel.setUserTeamData(userTeam);
+
+                    System.out.println("Success userTeam in team fragment");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserTeam> call, Throwable t) {
+                System.out.println("onFailure: userTeam frag " + t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void initialisePickerRV() {
+
+
+        //create pickerview
+        PickerLayoutManager pickerLayoutManager = new PickerLayoutManager(getContext(), PickerLayoutManager.HORIZONTAL, false);
+        pickerLayoutManager.setChangeAlpha(true);
+        pickerLayoutManager.setScaleDownBy(0.99f);
+        pickerLayoutManager.setScaleDownDistance(0.8f);
+        pickerLayoutManager.setStackFromEnd(true);
+
+        pickerRV.setLayoutManager(pickerLayoutManager);
+        PickerAdapter pickerAdapter = new PickerAdapter(getContext(), currentGW);
+        pickerRV.setAdapter(pickerAdapter);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(pickerRV);
+
+
+        pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
+            @Override
+            public void selectedView(View view) {
+                TextView gwView = view.findViewById(R.id.pickerText);
+                int gwNum = Integer.parseInt(gwView.getText().toString());
+                Toast.makeText(getContext(), gwView.getText(), Toast.LENGTH_SHORT).show();
+                selectedGW = gwNum;
+
+                getTeamData(selectedGW);
+
+
+            }
+        });
+    }
+
+    private void loadTeamRV() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        teamRecyclerView.setLayoutManager(linearLayoutManager);
         TeamSectionAdapter adapter = new TeamSectionAdapter(getContext(), sectionedList);
-        recyclerView.setAdapter(adapter);
+        teamRecyclerView.setAdapter(adapter);
+
     }
 
 
@@ -127,7 +228,6 @@ public class Team extends Fragment {
         //seperate starting and bench
         List<Picks> startingXIListRaw = picks.subList(0, 10);
         List<Picks> benchListRaw = picks.subList(11, 15);
-
 
 
         List<PlayerItem> convertList = createCustomPlayerList(startingXIListRaw, allPlayerData);
@@ -179,6 +279,7 @@ public class Team extends Fragment {
             playerItem.setName(playerInfo.getFirst_name() + "" + playerInfo.getSecond_name());
             playerItem.setElement_type(playerInfo.getElement_type());
             playerItem.setTeam_id(playerInfo.getTeam());
+            playerItem.setEvent_points(playerInfo.getEvent_points());
             newList.add(playerItem);
 
         }
@@ -192,7 +293,9 @@ public class Team extends Fragment {
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_team, container, false);
-        recyclerView = v.findViewById(R.id.recyclerView);
+        teamRecyclerView = v.findViewById(R.id.teamRV);
+        pickerRV = v.findViewById(R.id.pickerView);
+
 
         return v;
     }

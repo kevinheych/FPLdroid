@@ -1,4 +1,4 @@
-package com.example.fpl.ui.SwipeNavigation;
+package com.example.fpl;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,15 +11,32 @@ import com.example.fpl.Models.Picks.UserTeam;
 
 public class ShareViewModel extends ViewModel {
 
+
+    private MutableLiveData<Integer> userID = new MutableLiveData<>();
+    private MutableLiveData<Integer> currentGW = new MutableLiveData<>();;
     private MutableLiveData<User> userData = new MutableLiveData<>();
     private MutableLiveData<Bootstrap> bootstrap = new MutableLiveData<>();
     private MutableLiveData<History> history = new MutableLiveData<>();
     private MutableLiveData<UserTeam> userTeamData = new MutableLiveData<>();
 
+    public LiveData<Integer>  getCurrentGW() {
+        return currentGW;
+    }
+
+    public void setCurrentGW(Integer currentGWs) {
+        currentGW.setValue(currentGWs);
+    }
+
+    public LiveData<Integer> getUserID() {
+        return userID;
+    }
+    public void setUserID(Integer id) {
+        userID.setValue(id);
+    }
+
     public LiveData<User> getUser() {
         return userData;
     }
-
     public void setUser(User data) {
         userData.setValue(data);
     }
@@ -27,15 +44,11 @@ public class ShareViewModel extends ViewModel {
     public LiveData<Bootstrap> getBootstrap() {
         return bootstrap;
     }
-
-    public void setBootstrap(Bootstrap bootstrapData) {
-        this.bootstrap.setValue(bootstrapData);
-    }
+    public void setBootstrap(Bootstrap bootstrapData) { this.bootstrap.setValue(bootstrapData); }
 
     public LiveData<History> getHistory() {
         return history;
     }
-
     public void setHistory(History historyData) {
         this.history.setValue(historyData);
     }
@@ -43,7 +56,6 @@ public class ShareViewModel extends ViewModel {
     public LiveData<UserTeam> getUserTeam() {
         return userTeamData;
     }
-
     public void setUserTeamData(UserTeam data) {
         userTeamData.setValue(data);
     }

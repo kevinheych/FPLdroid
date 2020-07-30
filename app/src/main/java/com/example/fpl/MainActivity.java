@@ -6,7 +6,6 @@ import com.example.fpl.Models.Entry.History;
 import com.example.fpl.Models.Bootstrap.Bootstrap;
 import com.example.fpl.Models.Entry.User;
 import com.example.fpl.Models.Picks.UserTeam;
-import com.example.fpl.ui.SwipeNavigation.ShareViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -15,11 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fpl.ui.SwipeNavigation.TabPagerAdapter;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     //data
@@ -30,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     private fplAPI fpLapi;
     int userID;
+    public int currentGW;
+    boolean isLatestGwSaved;
+
 
     private ShareViewModel viewModel;
     @Override
@@ -39,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         //get data
         viewModel = ViewModelProviders.of(this).get(ShareViewModel.class);
+
+        isLatestGwSaved = false;
+        userID = 134211;
+
+        viewModel.setUserID(userID);
+
+
         getData();
 
 
@@ -54,28 +63,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getData() {
-        userID = 134211;
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(fplAPI.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        fpLapi = retrofit.create(fplAPI.class);
+         fpLapi = RequestManager.getRetrofitInstance().create(fplAPI.class);
 
 
-
-        getManagerData();
+        getUserEntryData(userID);
         getLiveData();
-        getHistory();
-        getTeam();
+        getHistory(userID);
+
 
 
     }
 
-    private void getTeam() {
+
+    public void getUserEntryData(int userID) {
+
+        Call<User> call = fpLapi.getUser(userID);
 
 
-        Call<UserTeam> call = fpLapi.getUserTeam(userID, 46);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    System.out.println(response.toString());
+                    managerData = response.body();
+                    viewModel.setUser(managerData);
+
+                    currentGW = managerData.getCurrentEvent();
+                    viewModel.setCurrentGW(currentGW);
+
+
+
+
+                    System.out.println("Success getManagerData");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                System.out.println("onFailure: getManagerData " + t.getLocalizedMessage());
+
+            }
+        });
+
+
+    }
+
+    public void getTeam(int userID, int gw) {
+
+
+        Call<UserTeam> call = fpLapi.getUserTeam(userID, gw);
 
         call.enqueue(new Callback<UserTeam>() {
             @Override
@@ -96,33 +133,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    private void getManagerData() {
-
-        Call<User> call = fpLapi.getUser(userID);
-
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    System.out.println(response.toString());
-                    managerData = response.body();
-                    viewModel.setUser(managerData);
-                    System.out.println("Success getManagerData");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                System.out.println("onFailure: getManagerData " + t.getLocalizedMessage());
-
-            }
-        });
 
     }
 
-    private void getLiveData() {
+    public void getLiveData() {
         Call<Bootstrap> call = fpLapi.getLive();
 
         call.enqueue(new Callback<Bootstrap>() {
@@ -141,9 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("onFailure: getLive " + t.getLocalizedMessage());
             }
         });
+
+
     }
 
-    private void getHistory() {
+    public void getHistory(int userID) {
         Call<History> call = fpLapi.getHistory(userID);
 
         call.enqueue(new Callback<History>() {
@@ -160,5 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("onFailure: getHistory " + t.getLocalizedMessage());
             }
         });
+
+
     }
 }

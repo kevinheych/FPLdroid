@@ -19,7 +19,7 @@ import com.example.fpl.Models.Bootstrap.Bootstrap;
 import com.example.fpl.Models.Entry.User;
 import com.example.fpl.R;
 import com.example.fpl.fplAPI;
-import com.example.fpl.ui.SwipeNavigation.ShareViewModel;
+import com.example.fpl.ShareViewModel;
 
 import java.util.List;
 

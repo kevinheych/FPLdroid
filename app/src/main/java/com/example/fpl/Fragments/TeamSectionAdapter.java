@@ -14,8 +14,6 @@ import com.example.fpl.Models.TeamList;
 import com.example.fpl.R;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.example.fpl.Models.TeamList.BENCH;
 import static com.example.fpl.Models.TeamList.DEF;
@@ -28,7 +26,7 @@ public class TeamSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<TeamList> sectionedTeamList;
     private Context context;
-    private TeamRecyclerViewAdapter teamRecyclerViewAdapter;
+    private TeamItemAdapter teamItemAdapter;
 
     public TeamSectionAdapter(Context context, List<TeamList> sectionedTeamList ) {
         this.sectionedTeamList = sectionedTeamList;
@@ -117,7 +115,7 @@ public class TeamSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void bind(TeamList teamlist) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 4);
             playerRV.setLayoutManager(gridLayoutManager);
-            TeamRecyclerViewAdapter adapter = new TeamRecyclerViewAdapter(context, teamlist.getPlayersList());
+            TeamItemAdapter adapter = new TeamItemAdapter(context, teamlist.getPlayersList());
             playerRV.setAdapter(adapter);
         }
     }
@@ -126,7 +124,7 @@ public class TeamSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void loadRV(Context context, RecyclerView recyclerView,  int columnCount, List<PlayerItem> list) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager( context,  columnCount);
         recyclerView.setLayoutManager(gridLayoutManager);
-        TeamRecyclerViewAdapter adapter = new TeamRecyclerViewAdapter(context, list);
+        TeamItemAdapter adapter = new TeamItemAdapter(context, list);
         recyclerView.setAdapter(adapter);
     }
 }
