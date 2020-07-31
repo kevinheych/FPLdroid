@@ -35,14 +35,14 @@ public class PlayerItem {
     private int id;
     private int element_type; //position gk,mid etc
     private int event_points;
-    private int team_id; //team code for club ARS, LIV
+    private int team_code; //team code for club ARS, LIV
 
     public PlayerItem() {
         this.name = "Player Name";
         this.id = 0;
         this.element_type = 0;
         this.event_points = 0;
-        this.team_id = 0;
+        this.team_code = 0;
     }
 
 
@@ -79,11 +79,11 @@ public class PlayerItem {
         this.event_points = event_points;
     }
 
-    public int getTeam_id() {
-        return team_id;
+    public int getTeam_code() {
+        return team_code;
     }
 
-    public void setTeam_id(int team_id) {
-        this.team_id = team_id;
+    public void setTeam_code(int team_code) {
+        this.team_code = team_code;
     }
 }

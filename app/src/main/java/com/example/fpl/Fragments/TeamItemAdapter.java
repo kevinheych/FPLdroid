@@ -11,9 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fpl.Models.Picks.PlayerItem;
 import com.example.fpl.Models.TeamList;
 import com.example.fpl.R;
+
 
 import java.util.List;
 
@@ -21,11 +23,12 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
 
     private List<PlayerItem> teamList;
     private LayoutInflater mInflater;
+    private Context context;
 
     public TeamItemAdapter(Context context, List<PlayerItem> teamList) {
         this.mInflater = LayoutInflater.from(context);
         this.teamList = teamList;
-
+        this.context = context;
     }
 
     @NonNull
@@ -60,8 +63,20 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
             playerImageView = itemView.findViewById(R.id.playerImageView);
         }
         public void bind(PlayerItem player) {
+
+            String suffix = (player.getElement_type() == 1) ? "_" + player.getElement_type() : "";
+            String imageUrl = String.format("https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_%s%s-110.png",player.getTeam_code(),suffix);
+            System.out.println(imageUrl);
+
+           // Picasso.get().load(imageUrl).into(playerImageView);
+            Glide.with(context)
+                    .load(imageUrl)
+                    .centerCrop()
+                    .override(66,87)
+                    .into(playerImageView);
+
             playerNameTextView.setText(player.getName());
-            playerPointsTextView.setText(String.format("%,d", player.getEvent_points()));
+            playerPointsTextView.setText(String.valueOf(player.getEvent_points()));
 
         }
 

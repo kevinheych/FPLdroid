@@ -278,7 +278,7 @@ public class Team extends Fragment {
             playerItem.setId(playerID);
             playerItem.setName(playerInfo.getWeb_name());
             playerItem.setElement_type(playerInfo.getElement_type());
-            playerItem.setTeam_id(playerInfo.getTeam());
+            playerItem.setTeam_code(playerInfo.getTeam_code());
             playerItem.setEvent_points(playerInfo.getEvent_points());
             newList.add(playerItem);
 

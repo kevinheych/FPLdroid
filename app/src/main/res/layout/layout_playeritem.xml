@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="#1D373030"
+
     android:gravity="center"
     android:orientation="vertical">
 
@@ -15,15 +15,15 @@
 
         android:layout_width="75dp"
         android:layout_height="75dp"
+        android:paddingBottom="3dp"
         android:layout_gravity="center_horizontal"
-        android:background="#FFFFFF"
         app:srcCompat="@android:drawable/btn_star_big_on"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
     <TextView
         android:id="@+id/playerName"
-        android:layout_width="100sp"
-        android:layout_height="20sp"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
         android:background="#E600753A"
         android:gravity="center_horizontal"
         android:text="Player"
