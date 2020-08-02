@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.fpl.Fragments.League;
-import com.example.fpl.Fragments.Status;
-import com.example.fpl.Fragments.Team;
+import com.example.fpl.ui.Fragments.LeagueFragment;
+import com.example.fpl.ui.Fragments.StatusFragment;
+import com.example.fpl.ui.Fragments.TeamFragment;
 import com.example.fpl.R;
 
 /**
@@ -33,13 +33,13 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = Status.newInstance(null, null);
+                fragment = StatusFragment.newInstance(null, null);
                 break;
             case 1:
-                fragment = Team.newInstance();
+                fragment = TeamFragment.newInstance();
                 break;
             case 2:
-                fragment = League.newInstance(null, null);
+                fragment = LeagueFragment.newInstance(null, null);
                 break;
 
         }

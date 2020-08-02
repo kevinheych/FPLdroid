@@ -2,20 +2,25 @@ package com.example.fpl;
 
 import android.os.Bundle;
 
-import com.example.fpl.Models.Entry.History;
-import com.example.fpl.Models.Bootstrap.Bootstrap;
-import com.example.fpl.Models.Entry.User;
-import com.example.fpl.Models.Picks.UserTeam;
+import com.example.fpl.data.model.Entry.History;
+import com.example.fpl.data.model.Bootstrap.Bootstrap;
+import com.example.fpl.data.model.Entry.User;
+import com.example.fpl.data.model.Picks.UserTeam;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fpl.ui.SwipeNavigation.TabPagerAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private History userHistory;
     private UserTeam userTeam;
 
-    private fplAPI fpLapi;
+    private ServiceApiFPL fpLapi;
     int userID;
     public int currentGW;
-    boolean isLatestGwSaved;
+
 
 
     private ShareViewModel viewModel;
@@ -41,43 +46,72 @@ public class MainActivity extends AppCompatActivity {
 
         //get data
         viewModel = ViewModelProviders.of(this).get(ShareViewModel.class);
-
-        isLatestGwSaved = false;
-        userID = 134211;
-
-        viewModel.setUserID(userID);
+        fpLapi = RequestManager.getRetrofitInstance(this).create(ServiceApiFPL.class);
 
 
-        getData();
+        getUserID();
 
+        viewModel.getUserID().observe(this, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        System.out.println("ID: "+ integer);
+                        userID = integer;
+                        if (integer != null ) {
+                            getData();
 
-        //create adapter for tab navigation
+                            loadUI();
+
+                        }
+                    }
+                });
+
+    }
+
+    private void loadUI() {
         TabPagerAdapter sectionsPagerAdapter = new TabPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
-
-
     }
 
     public void getData() {
-         fpLapi = RequestManager.getRetrofitInstance().create(fplAPI.class);
-
-
         getUserEntryData(userID);
         getLiveData();
         getHistory(userID);
+    }
 
+    public void getUserID() {
+        Call<ResponseBody> call = fpLapi.geUserID();
 
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    System.out.println(response.toString());
+                    try {
+                        String jsonResponse = response.body().string();
+                        JSONObject obj = new JSONObject(jsonResponse);
+                        Integer userID = obj.getJSONObject("player").getInt("entry");
+                        viewModel.setUserID(userID);
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("onFailure: getManagerData " + t.getLocalizedMessage());
+            }
+        });
     }
 
 
     public void getUserEntryData(int userID) {
 
-        Call<User> call = fpLapi.getUser(userID);
+        Call<User> call = fpLapi.getUserData(userID);
 
 
 
@@ -87,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     System.out.println(response.toString());
                     managerData = response.body();
-                    viewModel.setUser(managerData);
+                    viewModel.setUserData(managerData);
 
                     currentGW = managerData.getCurrentEvent();
                     viewModel.setCurrentGW(currentGW);

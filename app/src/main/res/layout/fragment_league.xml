@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.League">
+    android:orientation="vertical"
+    tools:context=".ui.Fragments.LeagueFragment">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:background="@color/colorPrimary"
+           android:padding="8dp">
 
 
-    <TextView
-        android:id="@+id/gwHeader"
-        android:layout_width="282dp"
-        android:layout_height="236dp"
-        android:text="LEAGUE FRAGMENT YO"
-        android:textSize="50sp"/>
-</FrameLayout>
+              <TextView
+                  android:id="@+id/league_nameTV"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Classic League"
+                  android:textColor="@android:color/white"
+                  android:textSize="16dp"
+                  android:layout_margin="8dp"/>
+
+
+       </LinearLayout>
+
+       <ListView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/classicListView" />
+
+
+
+</LinearLayout>

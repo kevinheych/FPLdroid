@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.fpl.Models.Entry.History;
-import com.example.fpl.Models.Entry.User;
-import com.example.fpl.Models.Bootstrap.Bootstrap;
-import com.example.fpl.Models.Picks.UserTeam;
+import com.example.fpl.data.model.Entry.History;
+import com.example.fpl.data.model.Entry.User;
+import com.example.fpl.data.model.Bootstrap.Bootstrap;
+import com.example.fpl.data.model.Picks.UserTeam;
 
 public class ShareViewModel extends ViewModel {
 
@@ -34,10 +34,10 @@ public class ShareViewModel extends ViewModel {
         userID.setValue(id);
     }
 
-    public LiveData<User> getUser() {
+    public LiveData<User> getUserData() {
         return userData;
     }
-    public void setUser(User data) {
+    public void setUserData(User data) {
         userData.setValue(data);
     }
 

@@ -2,32 +2,34 @@ package com.example.fpl;
 
 import android.content.Context;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
-import com.example.fpl.Models.Bootstrap.Bootstrap;
-import com.example.fpl.Models.Entry.History;
-import com.example.fpl.Models.Entry.User;
-import com.example.fpl.Models.Picks.UserTeam;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
 public class RequestManager {
-
 
 
     private static Retrofit retrofit;
 
 
-    public static Retrofit getRetrofitInstance() {
+    public static Retrofit getRetrofitInstance(Context context) {
         if (retrofit == null) {
-             retrofit = new Retrofit.Builder()
-                    .baseUrl(fplAPI.BASE_URL)
+
+            ClearableCookieJar cookieJar =
+                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .cookieJar(cookieJar)
+                    .build();
+
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(ServiceApiFPL.BASE_URL)
+                    .callFactory(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -37,3 +39,4 @@ public class RequestManager {
 
 
 }
+
