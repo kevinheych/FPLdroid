@@ -2,9 +2,9 @@ package com.example.fpl;
 
 import com.example.fpl.data.model.Entry.History;
 import com.example.fpl.data.model.Bootstrap.Bootstrap;
-import com.example.fpl.data.model.Entry.Leagues;
 import com.example.fpl.data.model.Entry.User;
 import com.example.fpl.data.model.Picks.UserTeam;
+import com.example.fpl.data.model.Standings.LeagueStandings;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -58,8 +58,8 @@ public interface ServiceApiFPL {
     Call<ResponseBody> login(@Body RequestBody body);
 
     @Headers("User-Agent: Mozilla/5.0")
-    @GET("leagues-classic/league_id/standings/")
-    Call<Leagues> getLeagues(@Path("league_id") int leagueID);
+    @GET("leagues-classic/{league_id}/standings/")
+    Call<LeagueStandings> getStandings(@Path("league_id") int leagueID);
 
 
 

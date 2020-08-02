@@ -1,6 +1,8 @@
 package com.example.fpl.ui.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,13 +14,16 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.fpl.LeagueStandingActivity;
 import com.example.fpl.R;
 import com.example.fpl.ServiceApiFPL;
 import com.example.fpl.ShareViewModel;
+import com.example.fpl.data.model.Entry.Classic;
 import com.example.fpl.data.model.Entry.Leagues;
 import com.example.fpl.data.model.Entry.User;
 
@@ -36,9 +41,13 @@ public class LeagueFragment extends Fragment {
     Leagues userLeagues;
     private ServiceApiFPL fpLapi;
     int userID;
+    private  LeagueListener listener;
 
     private ShareViewModel viewModel;
 
+    public interface  LeagueListener {
+        void passLeagueID(int id);
+    }
 
     public LeagueFragment() {
 
@@ -86,6 +95,20 @@ public class LeagueFragment extends Fragment {
         LeagueAdapter classicAdapter = new LeagueAdapter(getContext(), userLeagues.getClassic());
         classicLV.setAdapter(classicAdapter);
 
+        classicLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Classic item = classicAdapter.getItem(position);
+                int leagueID = item.getId();
+                //listener.passLeagueID(leagueID);
+                Intent intent = new Intent(getActivity().getBaseContext(), LeagueStandingActivity.class);
+                intent.putExtra("league_id",leagueID);
+                startActivity(intent);
+
+
+            }
+        });
+
 
 
 
@@ -105,6 +128,7 @@ public class LeagueFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,6 +142,14 @@ public class LeagueFragment extends Fragment {
 
         return v;
     }
+
+
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        listener = null;
+//    }
 }
 
 
