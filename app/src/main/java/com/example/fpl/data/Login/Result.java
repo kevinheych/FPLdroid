@@ -1,4 +1,4 @@
-package com.example.fpl.data;
+package com.example.fpl.data.Login;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

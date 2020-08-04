@@ -1,4 +1,4 @@
-package com.example.fpl.ui.Fragments;
+package com.example.fpl.Fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;

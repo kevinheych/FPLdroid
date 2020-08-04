@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.fpl.ui.Fragments.LeagueFragment;
-import com.example.fpl.ui.Fragments.StatusFragment;
-import com.example.fpl.ui.Fragments.TeamFragment;
+import com.example.fpl.Fragments.LeagueFragment;
+import com.example.fpl.Fragments.StatusFragment;
+import com.example.fpl.Fragments.TeamFragment;
 import com.example.fpl.R;
 
 /**

@@ -1,36 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_league"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.Fragments.LeagueFragment">
+    tools:context=".Fragments.LeagueFragment">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:background="@color/colorPrimary"
-           android:padding="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:stateListAnimator="@null">
 
-
-              <TextView
-                  android:id="@+id/league_nameTV"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Classic League"
-                  android:textColor="@android:color/white"
-                  android:textSize="16dp"
-                  android:layout_margin="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            >
 
 
-       </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginLeft="24dp"
+                android:text="Classic League"
+                android:textColor="@android:color/white"
+                android:textSize="16dp" />
 
-       <ListView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:id="@+id/classicListView" />
+
+        </LinearLayout>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/entry_rankTV"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="#"
+                android:textAlignment="textEnd"
+                android:textSize="16dp"
+                android:textColor="@android:color/black"
+                android:layout_margin="8dp"/>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="16dp"
+                android:textColor="@android:color/black"
+                android:layout_margin="8dp"
+                />
 
 
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray"/>
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/classicListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1px"/>
+
+    </LinearLayout>
+
+</FrameLayout>

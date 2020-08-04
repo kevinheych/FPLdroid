@@ -1,4 +1,4 @@
-package com.example.fpl.ui.Fragments;
+package com.example.fpl.Fragments;
 
 import android.os.Bundle;
 
@@ -19,8 +19,9 @@ import android.widget.TextView;
 import com.example.fpl.MyApplication;
 import com.example.fpl.data.model.Bootstrap.Bootstrap;
 import com.example.fpl.data.model.Bootstrap.Elements;
+import com.example.fpl.data.model.Picks.Entry_history;
 import com.example.fpl.data.model.Picks.Picks;
-import com.example.fpl.data.model.Picks.PlayerItem;
+import com.example.fpl.data.PlayerItem;
 import com.example.fpl.data.model.Picks.UserTeam;
 import com.example.fpl.data.TeamList;
 import com.example.fpl.R;
@@ -206,7 +207,7 @@ public class TeamFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         teamRecyclerView.setLayoutManager(linearLayoutManager);
-        TeamSectionAdapter adapter = new TeamSectionAdapter(getContext(), sectionedList);
+        TeamSectionAdapter adapter = new TeamSectionAdapter(getContext(), sectionedList, userTeam.getEntry_history());
         teamRecyclerView.setAdapter(adapter);
 
     }
@@ -282,6 +283,9 @@ public class TeamFragment extends Fragment {
             playerItem.setElement_type(playerInfo.getElement_type());
             playerItem.setTeam_code(playerInfo.getTeam_code());
             playerItem.setEvent_points(playerInfo.getEvent_points());
+            playerItem.setIs_captain(player.getIs_captain());
+            playerItem.setIs_vice_captain(player.getIs_vice_captain());
+            playerItem.setMultiplier(player.getMultiplier());
             newList.add(playerItem);
 
         }

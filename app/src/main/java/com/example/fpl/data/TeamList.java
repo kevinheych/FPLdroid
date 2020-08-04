@@ -1,7 +1,5 @@
 package com.example.fpl.data;
 
-import com.example.fpl.data.model.Picks.PlayerItem;
-
 import java.util.List;
 
 public class TeamList {

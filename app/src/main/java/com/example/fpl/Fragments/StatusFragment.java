@@ -1,4 +1,4 @@
-package com.example.fpl.ui.Fragments;
+package com.example.fpl.Fragments;
 
 import android.os.Bundle;
 
@@ -116,28 +116,6 @@ public class StatusFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-        viewModel = ViewModelProviders.of(getActivity()).get(ShareViewModel.class);
-        userData = viewModel.getUserData().getValue();
-        userHistory = viewModel.getHistory().getValue();
-        bootstrap = viewModel.getBootstrap().getValue();
-
-        if (userData != null) {
-            if (userHistory != null) {
-                if (bootstrap != null) {
-                    System.out.println("Status Fragment: Oncreate loadViews() ");
-                    loadViews();
-                }
-            }
-        }
-
-
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -173,7 +151,7 @@ public class StatusFragment extends Fragment {
         });
 
 
-        loadViews();
+
 
 
     }

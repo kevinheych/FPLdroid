@@ -62,6 +62,10 @@ public interface ServiceApiFPL {
     Call<LeagueStandings> getStandings(@Path("league_id") int leagueID);
 
 
+    @Headers("User-Agent: Mozilla/5.0")
+    @GET("event/{gw}/live")
+    Call<History> getElementPoints(@Path("gw") int gw);
+
 
 
 

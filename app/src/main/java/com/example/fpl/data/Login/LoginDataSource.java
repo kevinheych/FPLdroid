@@ -1,8 +1,7 @@
-package com.example.fpl.data;
+package com.example.fpl.data.Login;
 
 import com.example.fpl.MyApplication;
 import com.example.fpl.RequestManager;
-import com.example.fpl.data.model.LoggedInUser;
 import com.example.fpl.ServiceApiFPL;
 
 import java.io.IOException;

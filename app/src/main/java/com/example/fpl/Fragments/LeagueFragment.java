@@ -1,13 +1,10 @@
-package com.example.fpl.ui.Fragments;
+package com.example.fpl.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -15,19 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.fpl.LeagueStandingActivity;
 import com.example.fpl.R;
 import com.example.fpl.ServiceApiFPL;
 import com.example.fpl.ShareViewModel;
+import com.example.fpl.data.model.Bootstrap.Bootstrap;
 import com.example.fpl.data.model.Entry.Classic;
 import com.example.fpl.data.model.Entry.Leagues;
 import com.example.fpl.data.model.Entry.User;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,16 +31,16 @@ public class LeagueFragment extends Fragment {
 
     ListView classicLV;
 
+    Bootstrap boostrap;
     Leagues userLeagues;
     private ServiceApiFPL fpLapi;
     int userID;
-    private  LeagueListener listener;
+
+    int currentGW;
 
     private ShareViewModel viewModel;
 
-    public interface  LeagueListener {
-        void passLeagueID(int id);
-    }
+
 
     public LeagueFragment() {
 
@@ -73,7 +66,11 @@ public class LeagueFragment extends Fragment {
         viewModel = ViewModelProviders.of(getActivity()).get(ShareViewModel.class);
 
 
+
         userID =  viewModel.getUserID().getValue();
+        currentGW = viewModel.getCurrentGW().getValue();
+        boostrap = viewModel.getBootstrap().getValue();
+
 
         if (userID != 0) {
             User userData = viewModel.getUserData().getValue();
@@ -101,9 +98,15 @@ public class LeagueFragment extends Fragment {
                 Classic item = classicAdapter.getItem(position);
                 int leagueID = item.getId();
                 //listener.passLeagueID(leagueID);
-                Intent intent = new Intent(getActivity().getBaseContext(), LeagueStandingActivity.class);
-                intent.putExtra("league_id",leagueID);
-                startActivity(intent);
+
+
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.layout_league, LeagueStandingsFragment.newInstance(leagueID,currentGW));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+
 
 
             }

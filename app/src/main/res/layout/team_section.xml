@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/team_section_layout"
+
     >
 
 
@@ -14,5 +15,39 @@
 
         android:layout_gravity="center_horizontal" />
 
+    <LinearLayout
+        android:id="@+id/infoBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="right|center_vertical"
+        android:gravity="center_vertical"
+        android:layout_marginRight="16dp"
 
-</LinearLayout>
+        android:padding="8dp"
+        android:background="@drawable/rounded_corner">
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score: 60"
+            android:textSize="12sp"
+            android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/benchpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bench: 11 "
+            android:textSize="12sp"
+            android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finance:   £100 (0.5)"
+            android:textSize="12sp"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</FrameLayout>

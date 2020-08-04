@@ -1,6 +1,9 @@
-package com.example.fpl.ui.Fragments;
+package com.example.fpl.Fragments;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.fpl.data.model.Picks.PlayerItem;
+import com.example.fpl.MyApplication;
+import com.example.fpl.data.PlayerItem;
 import com.example.fpl.R;
 
 
@@ -52,6 +56,7 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
         public TextView playerNameTextView;
         public TextView playerPointsTextView;
         public ImageView playerImageView;
+        public ImageView captainView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +64,7 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
             playerNameTextView = itemView.findViewById(R.id.playerName);
             playerPointsTextView = itemView.findViewById(R.id.playerPoints);
             playerImageView = itemView.findViewById(R.id.playerImageView);
+            captainView = itemView.findViewById(R.id.captainItemView);
         }
         public void bind(PlayerItem player) {
 
@@ -75,6 +81,18 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
 
             playerNameTextView.setText(player.getName());
             playerPointsTextView.setText(String.valueOf(player.getEvent_points()));
+
+            if (player.isIs_captain()) {
+                Drawable captainIcon =  MyApplication.getAppContext().getDrawable(R.drawable.icon_captain);
+                captainView.setImageDrawable(captainIcon);
+
+
+            } else if (player.isIs_vice_captain()) {
+                Drawable vcIcon =  MyApplication.getAppContext().getDrawable(R.drawable.icon_vice);
+                captainView.setImageDrawable(vcIcon);
+            } else {
+                captainView.setImageResource(0);
+            }
 
         }
 

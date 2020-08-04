@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.fpl.data.PlayerItem;
 import com.example.fpl.data.model.Entry.History;
 import com.example.fpl.data.model.Entry.User;
 import com.example.fpl.data.model.Bootstrap.Bootstrap;
 import com.example.fpl.data.model.Picks.UserTeam;
+
+import java.util.List;
 
 public class ShareViewModel extends ViewModel {
 
@@ -18,6 +21,16 @@ public class ShareViewModel extends ViewModel {
     private MutableLiveData<Bootstrap> bootstrap = new MutableLiveData<>();
     private MutableLiveData<History> history = new MutableLiveData<>();
     private MutableLiveData<UserTeam> userTeamData = new MutableLiveData<>();
+    private MutableLiveData<List<PlayerItem>> leagueListData = new MutableLiveData<>();
+
+
+    public LiveData<List<PlayerItem>> getLeagueList() {
+        return leagueListData;
+    }
+
+    public void setLeagueList(List<PlayerItem> leagueList) {
+        leagueListData.setValue(leagueList);
+    }
 
     public LiveData<Integer>  getCurrentGW() {
         return currentGW;

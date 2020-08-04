@@ -1,4 +1,4 @@
-package com.example.fpl.ui.Fragments;
+package com.example.fpl.Fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.example.fpl.R;
 import com.example.fpl.data.model.Entry.Classic;
-import com.example.fpl.data.model.Entry.Leagues;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class LeagueAdapter extends ArrayAdapter<Classic> {
         Classic currentLeague = lLeagues.get(position);
 
         TextView entry_rank = listItem.findViewById(R.id.entry_rankTV);
-        TextView name = listItem.findViewById(R.id.league_nameTV);
+        TextView name = listItem.findViewById(R.id.title);
 
         entry_rank.setText(String.valueOf(currentLeague.getEntryRank()));
         name.setText(currentLeague.getName());

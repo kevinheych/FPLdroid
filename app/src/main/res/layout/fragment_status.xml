@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Fragments.StatusFragment">
+    tools:context=".Fragments.StatusFragment">
 
  <LinearLayout
      android:layout_width="match_parent"
@@ -23,27 +23,35 @@
         <TableRow
             android:id="@+id/nameRow"
             android:background="#37003c"
-            android:paddingTop="8dp">
+            android:padding="@dimen/appbar_padding_top"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/teamNameText"
                 android:layout_margin="8dp"
-                android:padding="16dp"
+                android:padding="8dp"
+                android:layout_weight="1"
                 android:text="Team Name"
                 android:textColor="@android:color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
 
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/managerText"
+                android:layout_weight="2"
                 android:layout_margin="4dp"
-                android:padding="16dp"
-                android:text="Manager Name"
+                android:text="Manager Namessss "
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-
+                android:layout_gravity="center"
                 />
         </TableRow>
 
@@ -77,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="A"
+                android:text=""
                 android:textSize="24sp" />
 
             <TextView
@@ -97,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="C"
+                android:text=""
                 android:textSize="24sp" />
         </TableRow>
 
@@ -534,7 +542,7 @@
                  android:paddingTop="4dp"
                  android:paddingRight="16dp"
                  android:paddingBottom="4dp"
-                 android:text="M"
+
                  android:textSize="16sp" />
 
          </TableRow>
@@ -567,7 +575,7 @@
                  android:paddingTop="4dp"
                  android:paddingRight="16dp"
                  android:paddingBottom="4dp"
-                 android:text="N"
+
                  android:textSize="16sp" />
          </TableRow>
 
@@ -599,7 +607,7 @@
                  android:paddingTop="4dp"
                  android:paddingRight="16dp"
                  android:paddingBottom="4dp"
-                 android:text="O"
+
                  android:textSize="16sp" />
          </TableRow>
 

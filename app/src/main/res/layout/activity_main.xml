@@ -9,8 +9,11 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+
+
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@color/colorPrimary">
+        app:elevation="10dp">
 
         <TextView
             android:id="@+id/title"
@@ -18,17 +21,22 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minHeight="?actionBarSize"
-            android:paddingTop="@dimen/appbar_padding_top"
             android:paddingStart="@dimen/appbar_padding"
+            android:paddingTop="@dimen/appbar_padding_top"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#4B37003C"/>
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" />
+            android:background="?attr/colorPrimary"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:paddingStart="45dp"
+   >
+    <ImageView
+        android:id="@+id/captain"
+
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:src="@drawable/icon_shirt"
+        android:layout_width="32dp"
+        android:layout_height="28dp"
+
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/playerItemTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        android:text="Player item "
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        />
+
+
+</LinearLayout>
