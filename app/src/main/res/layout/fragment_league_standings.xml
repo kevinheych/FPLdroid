@@ -1,17 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_league_standing"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".Fragments.LeagueStandingsFragment"
-    android:id="@+id/layout_league_standing"
-    android:clickable="true">
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context=".Fragments.LeagueStandingsFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/entry_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/expandableRV"/>
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingStart="20dp">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/leagueName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="League Name"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.100000024" />
+
+        <TextView
+            android:id="@+id/rankTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Rank"
+            android:textColor="#7739e7"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team"
+            android:textColor="@android:color/white"
+
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gwHeader"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toEndOf="@+id/rankTV"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.86" />
+
+        <TextView
+            android:id="@+id/gwHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+
+            android:gravity="center"
+            android:text="GW"
+            android:textColor="#e72d75"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/totalPoints"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85" />
+
+        <TextView
+            android:id="@+id/totalPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+
+            android:gravity="center"
+            android:text="Total"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ExpandableListView
+        android:id="@+id/expandableRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:itemCount="15"
+        tools:listitem="@layout/league_standing_entry_header" />
+
+</LinearLayout>

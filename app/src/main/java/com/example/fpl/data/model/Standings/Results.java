@@ -1,7 +1,12 @@
 package com.example.fpl.data.model.Standings;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Comparator;
+import java.util.Objects;
 
 public class Results {
     @Expose
@@ -105,19 +110,39 @@ public class Results {
     }
 
     @Override
-    public String toString() {
-        return "\nResults{" +
-                "\nentry_name='" + entry_name + '\'' +
-                ", \nentry=" + entry +
-                ", \ntotal=" + total +
-                ", \nrank_sort=" + rank_sort +
-                ", \nlast_rank=" + last_rank +
-                ", \nrank=" + rank +
-                ", \nplayer_name='" + player_name + '\'' +
-                ", \nevent_total=" + event_total +
-                ", \nid=" + id +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Results results = (Results) o;
+        return entry == results.entry &&
+                total == results.total &&
+                rank_sort == results.rank_sort &&
+                last_rank == results.last_rank &&
+                rank == results.rank &&
+                event_total == results.event_total &&
+                id == results.id &&
+                entry_name.equals(results.entry_name) &&
+                player_name.equals(results.player_name);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(entry_name, entry, total, rank_sort, last_rank, rank, player_name, event_total, id);
+    }
 
+    @Override
+    public String toString() {
+        return "Results{" +
+                "entry_name='" + entry_name + '\'' +
+                ", entry=" + entry +
+                ", total=" + total +
+                ", rank_sort=" + rank_sort +
+                ", last_rank=" + last_rank +
+                ", rank=" + rank +
+                ", player_name='" + player_name + '\'' +
+                ", event_total=" + event_total +
+                ", id=" + id +
+                '}';
+    }
 }
+

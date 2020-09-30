@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:paddingStart="45dp"
+
+    android:id="@+id/layout_league_standing_child_player"
+
    >
     <ImageView
         android:id="@+id/captain"
@@ -14,7 +15,7 @@
         android:layout_gravity="center"/>
     <ImageView
         android:id="@+id/imageView"
-        android:src="@drawable/icon_shirt"
+
         android:layout_width="32dp"
         android:layout_height="28dp"
 
@@ -22,13 +23,18 @@
 
     <TextView
         android:id="@+id/playerItemTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="34dp"
         android:layout_gravity="center"
         android:padding="2dp"
-        android:text="Player item "
+        android:text=""
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+
+
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeMaxTextSize="14sp"
+        android:autoSizeStepGranularity="1sp"
         />
 
 

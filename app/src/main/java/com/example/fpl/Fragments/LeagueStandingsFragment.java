@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.example.fpl.MyApplication;
 import com.example.fpl.R;
@@ -24,11 +26,16 @@ import com.example.fpl.data.model.Picks.Picks;
 import com.example.fpl.data.model.Picks.UserTeam;
 import com.example.fpl.data.PlayerItem;
 import com.example.fpl.data.model.Standings.LeagueStandings;
+import com.example.fpl.data.model.Standings.ResultComp;
 import com.example.fpl.data.model.Standings.Results;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import retrofit2.Call;
@@ -46,29 +53,33 @@ public class LeagueStandingsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LEAGUE_ID = "leagueID";
     private static final String CURRENT_GW = "currentGW";
+    private static final String LEAGUE_NAME = "leagueName";
 
     private int leagueID;
+    String leagueName;
     private int currentGW;
     ShareViewModel viewModel;
     Bootstrap bootstrap;
     ServiceApiFPL service;
-    List<LeagueEntryModel> leagueEntries;
+    TreeMap<Results,List<PlayerItem>> leagueEntries;
     LeagueStandings leagueStanding;
-    List<PlayerItem> convertedPicksList;
+
     List<Results> entryObjectList;
 
-    RecyclerView rv;
-    LeagueStandingAdapter adapter;
+    TextView leagueHeader;
+    ExpandableListView expandableRV;
+    LeagueStandingAdapter2 adapter;
 
     public LeagueStandingsFragment() {
         // Required empty public constructor
     }
 
 
-    public static LeagueStandingsFragment newInstance(int leagueID, int currentGW) {
+    public static LeagueStandingsFragment newInstance(int leagueID, String leagueName, int currentGW) {
         LeagueStandingsFragment fragment = new LeagueStandingsFragment();
         Bundle args = new Bundle();
         args.putInt(LEAGUE_ID, leagueID);
+        args.putString(LEAGUE_NAME, leagueName);
         args.putInt(CURRENT_GW, currentGW);
         fragment.setArguments(args);
         return fragment;
@@ -79,6 +90,7 @@ public class LeagueStandingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             leagueID = getArguments().getInt(LEAGUE_ID);
+            leagueName = getArguments().getString(LEAGUE_NAME);
             currentGW = getArguments().getInt(CURRENT_GW);
         }
 
@@ -93,24 +105,17 @@ public class LeagueStandingsFragment extends Fragment {
 
         service = RequestManager.getRetrofitInstance(MyApplication.getAppContext()).create(ServiceApiFPL.class);
 
-        leagueEntries = new ArrayList<LeagueEntryModel>();
+        leagueEntries = new TreeMap<Results,List<PlayerItem>>(new ResultComp());
 
         getLeagueStanding(leagueID);
 
-
-
-
-
-
     }
-    private void loadViews(List<LeagueEntryModel> entries) {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        adapter = new LeagueStandingAdapter(entries, entryObjectList);
-        rv.setLayoutManager(layoutManager);
-        rv.setAdapter(adapter);
+    private void loadViews(TreeMap<Results,List<PlayerItem>> entries) {
 
+        adapter = new LeagueStandingAdapter2( MyApplication.getAppContext(), entries);
 
+        expandableRV.setAdapter(adapter);
     }
 
 
@@ -130,7 +135,8 @@ public class LeagueStandingsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<LeagueStandings> call, Throwable t) {
-                System.out.println("onFailure: userTeam frag " + t.getLocalizedMessage());
+                System.out.println("onFailure: getLeagueStanding  " + t.getLocalizedMessage());
+
             }
         });
 
@@ -167,24 +173,20 @@ public class LeagueStandingsFragment extends Fragment {
 
                     UserTeam userTeam = response.body();
                     List<Picks> picks = userTeam.getPicks();
-                    System.out.println(picks.toString());
 
+                    List<PlayerItem> convertedPicksList;
                     convertedPicksList =  createCustomPlayerList(picks, bootstrap.getElements());
-                    LeagueEntryModel newEntry = new LeagueEntryModel(entry,  convertedPicksList);
-                    leagueEntries.add(newEntry);
 
-                    List<LeagueEntryModel> sortedList =  leagueEntries.stream()
-                            .sorted(Comparator.comparing(LeagueEntryModel::getRank))
-                            .collect(Collectors.toList());
+                    leagueEntries.put(entry,convertedPicksList );
 
-
-                    loadViews(sortedList);
+                    loadViews(leagueEntries);
                 }
             }
 
             @Override
             public void onFailure(Call<UserTeam> call, Throwable t) {
                 System.out.println("onFailure: userTeam frag " + t.getLocalizedMessage());
+
             }
         });
     }
@@ -192,9 +194,14 @@ public class LeagueStandingsFragment extends Fragment {
     private List<PlayerItem> createCustomPlayerList(List<Picks> playerList, List<Elements> allData) {
 
         List<PlayerItem> newList = new ArrayList<>();
-        for (Picks player : playerList) {
-            int playerID = player.getElement();
 
+        for(int i=0; i< playerList.size(); i++){
+            //add a seperation between XI and bench
+            if (i==11){
+                newList.add(new PlayerItem());
+            }
+            Picks player = playerList.get(i);
+            int playerID = player.getElement();
             Elements playerInfo = allData.stream()
                     .filter(element -> element.getId() == playerID)
                     .findFirst()
@@ -213,21 +220,9 @@ public class LeagueStandingsFragment extends Fragment {
 
         }
 
+
         return newList;
     }
-
-
-
-
-
-
-
-
-/*
-
-Below is loading views
-
- */
 
 
 
@@ -237,9 +232,14 @@ Below is loading views
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_league_standings, container, false);
 
-         rv = view.findViewById(R.id.expandableRV);
+
+        leagueHeader = view.findViewById(R.id.leagueName);
+        TextView leagueHeaderPts = view.findViewById(R.id.gwHeader);
+        expandableRV = view.findViewById(R.id.expandableRV);
 
 
+        leagueHeader.setText(leagueName);
+        leagueHeaderPts.setText("GW"+currentGW);
         return view;
     }
 }

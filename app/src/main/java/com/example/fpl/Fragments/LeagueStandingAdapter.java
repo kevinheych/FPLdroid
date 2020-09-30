@@ -14,10 +14,11 @@ import java.util.List;
 
 public class LeagueStandingAdapter extends ExpandableRecyclerViewAdapter<LeagueEntryViewHolder, LeaguePlayerListViewHolder> {
 
-private List<Results>   entries;
+private List<Results> entries;
+
     public LeagueStandingAdapter(List<? extends ExpandableGroup> groups, List<Results> entries) {
         super(groups);
-this.entries = entries;
+        this.entries = entries;
 
     }
 
@@ -31,14 +32,14 @@ this.entries = entries;
     @Override
     public LeagueEntryViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.league_standing_entrytitle, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.league_standing_entry_header, parent, false);
         return new LeagueEntryViewHolder(view);
     }
 
     @Override
     public LeaguePlayerListViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.league_standing_teamlist, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.league_standing_player_item, parent, false);
         return new LeaguePlayerListViewHolder(view);
     }
 

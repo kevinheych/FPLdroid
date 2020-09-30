@@ -45,7 +45,7 @@ public class PlayerItem implements Parcelable {
     private int multiplier;
 
     public PlayerItem() {
-        this.name = "Player Name";
+        this.name = "";
         this.id = 0;
         this.element_type = 0;
         this.event_points = 0;

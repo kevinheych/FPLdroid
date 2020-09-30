@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="#95E3E1E1"
+    android:background="#ffffff"
     android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:id="@+id/entry_header"
     >
 
     <TextView
@@ -13,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textColor="@android:color/black"
-        android:text="50"
+        android:textColor="#7739e7"
+        android:text="Rank"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +39,7 @@
 
             android:text="Team Name"
 
-            android:textColor="@android:color/black"
+            android:textColor="#e72d75"
             android:textSize="16sp" />
 
         <TextView
@@ -45,19 +47,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Manager Name"
-            android:textColor="@android:color/black"
+            android:textColor="#ff7cab"
             android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/gwPoints"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:layout_marginEnd="13dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="GW"
-        android:textColor="@android:color/black"
+        android:textColor="#e72d75"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/totalPoints"
@@ -66,12 +68,13 @@
     <TextView
         android:id="@+id/totalPoints"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+
         android:gravity="center"
-        android:padding="8dp"
         android:text="Total"
-        android:textColor="@android:color/black"
+
+        android:textColor="#37003c"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

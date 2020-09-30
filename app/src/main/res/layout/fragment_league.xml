@@ -17,46 +17,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:orientation="horizontal"
+
             android:padding="8dp"
             >
 
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:layout_marginLeft="24dp"
-                android:text="Classic League"
+
+                android:textAlignment="center"
+
+                android:text="Classic"
                 android:textColor="@android:color/white"
                 android:textSize="16dp" />
 
 
+
         </LinearLayout>
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:background="@color/colorPrimary"
+            >
 
             <TextView
                 android:id="@+id/entry_rankTV"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="#"
+                android:layout_margin="8dp"
+                android:text="Rank"
                 android:textAlignment="textEnd"
-                android:textSize="16dp"
-                android:textColor="@android:color/black"
-                android:layout_margin="8dp"/>
+                android:textColor="@android:color/white"
+                android:textSize="16dp" />
 
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="League Name"
                 android:textSize="16dp"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:layout_margin="8dp"
                 />
 
@@ -72,7 +75,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/darker_gray"
-            android:dividerHeight="1px"/>
+            android:dividerHeight="1px"
+            tools:itemCount="15"
+            tools:listitem="@layout/layout_league_item"/>
 
     </LinearLayout>
 

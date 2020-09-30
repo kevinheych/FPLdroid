@@ -102,7 +102,7 @@ public class LeagueFragment extends Fragment {
 
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.layout_league, LeagueStandingsFragment.newInstance(leagueID,currentGW));
+                fragmentTransaction.replace(R.id.layout_league, LeagueStandingsFragment.newInstance(leagueID,item.getName(), currentGW));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

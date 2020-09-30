@@ -179,7 +179,7 @@ public class TeamSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             String benchText = "Bench: " + history.getPoints_on_bench() + "pts";
             benchpts.setText(benchText);
 
-            String financeText =  "Finance: £"+ history.getValue()/10 + " (" + history.getBank()/10 + ")";
+            String financeText =  "Finance: £"+ history.getValue()/10 + " (£" + history.getBank()/10 + ")";
             finance.setText(financeText);
 
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 1);
